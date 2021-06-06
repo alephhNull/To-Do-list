@@ -44,7 +44,38 @@ class MyApp {
             "3. Remove item\n" +
             "4. Sort items\n" + 
             "5. back")
-            break
+            let command = readLine()
+            switch command {
+                case "1":
+                    let title = readLine()
+                    let content = readLine()
+                    let priority = Int(readLine())
+                    let item = Item(title: title, content: content, priority: priority)
+                    list.items.append(item)
+                    break
+                case "2":
+                    let itemId = readLine()
+                    
+                    let newTitle = readLine()
+                    let newContent = readLine()
+                    let newPriority = readLine()
+
+                    list.items[Int(itemId)].title = newTitle
+                    list.items[Int(itemId)].content = newContent
+                    list.items[Int(itemId)].priority = Int(newPriority)
+                    
+                    break
+                case "3":
+                    let itemId = readLine()
+                    list.items.remove(at: Int(itemId))
+                    break
+                case "4":
+                    break
+                case "5":
+                    return
+                default:
+                    break
+            }
         }
     }
 }
