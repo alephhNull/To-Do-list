@@ -1,3 +1,4 @@
+import Foundation
 
 MyApp.mainMenu()
 
@@ -42,7 +43,6 @@ class MyApp {
     }
 
     static func listMenu(list: List) {
-        //TODO
         while true {
             print("\nList: \(list.name)")
             print("items:")
@@ -84,8 +84,29 @@ class MyApp {
                 list.items.remove(at: Int(readLine()!)!)
                 print("item removed")
             case "4":
-                //TODO
-                break
+                print("\n1. Sort by date ascending\n" +
+                "2. Sort by date descending\n" +
+                "3. Sort by title ascending\n" +
+                "4. Sort by title descending\n" +
+                "5. Sort by priority ascending\n" +
+                "6. Sort by priority descending")
+                let command = readLine()!
+                switch command {
+                case "1":
+                    list.items.sort {$0.dateCreated < $1.dateCreated}
+                case "2":
+                    list.items.sort {$0.dateCreated > $1.dateCreated}
+                case "3":
+                    list.items.sort {$0.title < $1.title}
+                case "4":
+                    list.items.sort {$0.title > $1.title}
+                case "5":
+                    list.items.sort {$0.priority < $1.priority}
+                case "6":
+                    list.items.sort {$0.priority > $1.priority}
+                default:
+                    break
+                }
             case "5":
                 return
             default:
@@ -109,11 +130,13 @@ class Item: CustomStringConvertible {
     var title: String
     var content: String
     var priority: Int
+    let dateCreated: Date
     
     init(title: String, content: String, priority: Int) {
         self.title = title
         self.content = content
         self.priority = priority
+        self.dateCreated = Date()
     }
 
     var description: String {
