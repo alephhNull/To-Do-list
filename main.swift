@@ -20,6 +20,16 @@ class MyApp {
                 lists.append(list)
                 listMenu(list: list)
             case "2":
+                if lists.count == 0 {
+                    print("\nNo lists has been created yet")
+                    break
+                }
+                print("\nChoose one list:")
+                for (index, list) in lists.enumerated() {
+                    print("\(index). \(list.name)")
+                }
+                let index = Int(readLine()!)
+                listMenu(list: lists[index!])
                 break
             case "3":
                 break
@@ -36,8 +46,8 @@ class MyApp {
         while true {
             print("\nList: \(list.name)")
             print("items:")
-            for item in list.items {
-                print(item)
+            for (index, item) in list.items.enumerated() {
+                print("\nitem No. : \(index)\n\(item)")
             }
             print("\n1. Add item\n" +
             "2. Edit item\n" +
@@ -46,35 +56,40 @@ class MyApp {
             "5. back")
             let command = readLine()
             switch command {
-                case "1":
-                    let title = readLine()
-                    let content = readLine()
-                    let priority = Int(readLine())
-                    let item = Item(title: title, content: content, priority: priority)
-                    list.items.append(item)
-                    break
-                case "2":
-                    let itemId = readLine()
-                    
-                    let newTitle = readLine()
-                    let newContent = readLine()
-                    let newPriority = readLine()
-
-                    list.items[Int(itemId)].title = newTitle
-                    list.items[Int(itemId)].content = newContent
-                    list.items[Int(itemId)].priority = Int(newPriority)
-                    
-                    break
-                case "3":
-                    let itemId = readLine()
-                    list.items.remove(at: Int(itemId))
-                    break
-                case "4":
-                    break
-                case "5":
-                    return
-                default:
-                    break
+            case "1":
+                print("\nEnter the title:")
+                let title = readLine()
+                print("Enter the content:")
+                let content = readLine()
+                print("Enter priority number:")
+                let priority = Int(readLine()!)
+                let toDoItem = Item(title: title!, content: content!, priority: priority!)
+                list.items.append(toDoItem)
+                print("item added")
+            case "2":
+                print("\nSelect an item:")
+                let item = list.items[Int(readLine()!)!]
+                print("\nEnter new title:")
+                let title = readLine()
+                item.title = title!
+                print("Enter new content:")
+                let content = readLine()
+                item.content = content!
+                print("Enter new priority number:")
+                let priority = Int(readLine()!)
+                item.priority = priority!
+                print("item edited")
+            case "3":
+                print("\nSelect an item:")
+                list.items.remove(at: Int(readLine()!)!)
+                print("item removed")
+            case "4":
+                //TODO
+                break
+            case "5":
+                return
+            default:
+                break
             }
         }
     }
@@ -102,7 +117,7 @@ class Item: CustomStringConvertible {
     }
 
     var description: String {
-        return "\ntitle: \(self.title) \n" +
+        return "title: \(self.title) \n" +
         "content: \(self.content) \n" +
         "priority: \(self.priority)"
     }
