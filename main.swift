@@ -4,6 +4,7 @@ MyApp.mainMenu()
 
 class MyApp {
     static var lists = [List]()
+    static var categories = [String:Category]()
 
     static func mainMenu() {
         while true {
@@ -33,7 +34,7 @@ class MyApp {
                 listMenu(list: lists[index!])
                 break
             case "3":
-                break
+                categoryMenu()
             case "4":
                 return
             default:
@@ -53,8 +54,9 @@ class MyApp {
             "2. Edit item\n" +
             "3. Remove item\n" +
             "4. Sort items\n" + 
-            "5. back")
-            let command = readLine()
+            "5. Add item to category\n" +
+            "6. back")
+            let command = readLine()!
             switch command {
             case "1":
                 print("\nEnter the title:")
@@ -108,12 +110,54 @@ class MyApp {
                     break
                 }
             case "5":
+                print("\nSelect an item:")
+                let item = list.items[Int(readLine()!)!]
+                print("\nSelect a category:")
+                for category in categories.keys {
+                    print(category)
+                }
+                print()
+                let category = categories[readLine()!]!
+                category.items.append(item)
+                print("done")
+            case "6":
                 return
             default:
                 break
             }
         }
     }
+
+    static func categoryMenu() {
+        while true {
+            print("\nCategories:\n")
+            for category in categories.keys {
+                print(category)
+            }
+            print("\n1. Create new category\n" +
+            "2. See a category\n" +
+            "3. back")
+            let command = readLine()!
+            switch command {
+            case "1":
+                print("\nEnter name of the new category")
+                let name = readLine()!
+                categories[name] = Category(name: name)
+                print("done")
+            case "2":
+                print("\nSelect a category:")
+                let category = categories[readLine()!]!
+                print("items:")
+                for (index, item) in category.items.enumerated() {
+                    print("\nitem No. : \(index)\n\(item)")
+                }
+            case "3":
+                return
+            default:
+                break
+            }
+        }
+    }    
 }
 
 class List {
